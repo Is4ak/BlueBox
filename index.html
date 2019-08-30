@@ -30,23 +30,23 @@ You may prefer to load this from the CDN instead of directly from the server as 
 
 <!-- displayed on login failures -->
 <div id="loginFailureDiv" class="alertBox hidden">
-<p>Invalid email address or password, please try again.</p>
+<p>Correo o contraseña invalida, porfavor intenta de nuevo.</p>
 </div> <!-- loginFailureDiv -->
 
 <!-- displayed when an API call fails, usually because of an expired access token -->
 <div id="apiFailureDiv" class="alertBox hidden">
-<p>An error occurred accessing the API. Try logging in again.</p>
+<p>Ocurrio un error al acceder al API. Intentra entrar de nuevo.</p>
 </div> <!-- apiFailureDiv -->
 
 <!-- displayed to show the login screen -->
 <div id="loginDiv" class="hidden">
 <form>
-<p>Log in with the email address and password you use for your Particle login:</p>
+<p>Incia sesion con las credenciales de particle:</p>
 <table>
-<tr><td>Email Address</td><td><input type="text" id="loginUser"/></td></tr>
-<tr><td>Password</td><td><input type="password" id="loginPass" /></td></tr>
+<tr><td>Correo</td><td><input type="text" id="loginUser"/></td></tr>
+<tr><td>Contraseña</td><td><input type="password" id="loginPass" /></td></tr>
 </table>
-<input type="submit" id="loginButton">
+<input type="submit" id="loginButton"value="Iniciar Sesion"/>
 </form>
 </div> <!-- loginDiv -->
 
@@ -55,40 +55,40 @@ You may prefer to load this from the CDN instead of directly from the server as 
 
 <!-- popup menu to select a device to control -->
 <form>
-<p>Device: 
+<p>Dispositivo: 
 <select id="deviceSelect">
-<option value="" selected="selected">Select Device</option>
+<option value="" selected="selected">Seleccione el dispositivo</option>
 </select></p>
 </form>
 <p>&nbsp;</p>
 
 <!-- displayed while we're waiting for a response from the device -->
 <div id="queryingDiv" class="hidden">
-<p>Attempting to contact the device&hellip;</p>
+<p>Trantando de conectar al dispositivo&hellip;</p>
 </div> <!-- queryingDiv -->
 
 <!-- displayed when the device doesn't support the led api -->
 <div id="wrongApiDiv" class="alertBox hidden">
-<p>The device you have selected does not appear to have the test code flashed to it.</p>
+<p>El dispositivo parece tener otro codigo instalado.</p>
 </div> <!-- wrongApiDiv -->
 
 <!-- displayed when the device did not respond -->
 <div id="deviceNotAvailableDiv" class="alertBox hidden">
-<p>The device you have selected did not respond to requests.</p>
+<p>El dispositivo seleccionado no respondio a las solicitudes enviadas.</p>
 </div> <!-- deviceNotAvailableDiv -->
 
 <!-- normal display with the button to toggle the LED and show its state -->
 <div id="appDiv" class="hidden">
 <form>
-<p><input type="button" id="toggleButton" value="Toggle LED"/></p>
-<div id="ledOnDiv" class="hidden ledOn">LED ON!</div>
-<div id="ledOffDiv" class="hidden ledOff">led off</div>
+<p><input type="button" id="toggleButton" value="Alternar Relevador"/></p>
+<div id="ledOnDiv" class="hidden ledOn">Relevador 1 Activado</div> 
+<div id="ledOffDiv" class="hidden ledOff">Relevador 1 Desactivado</div>
 </form>
 </div>
 
 <p>&nbsp;</p>
 <form>
-<p><input type="button" id="logoutButton" value="Log Out"/></p>
+<p><input type="button" id="logoutButton" value="Salir"/></p>
 </form>
 
 </div> <!-- mainDiv -->
