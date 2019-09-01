@@ -1,98 +1,105 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<html dir="ltr" lang="en-US"><head><!-- Created by Artisteer v4.3.0.60858 -->
+    <meta charset="utf-8">
+    <title>Home
+</title>
+    <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
 
-<title>Particle API Test Page</title>
-
-<!-- https://jquery.com 
-You may prefer to load this from the CDN instead of directly from the server as done here -->
-<script type="text/javascript" src="jquery.js"></script>
-
-<!-- https://github.com/js-cookie/js-cookie -->
-<script type="text/javascript" src="js.cookie.js"></script>
-
-<!-- https://docs.particle.io/reference/javascript/ -->
-<script type="text/javascript" src="particle.min.js"></script>
-
-<!-- You may prefer to load this from the CDN instead of directly:
-<script type="text/javascript" src="//cdn.jsdelivr.net/particle-api-js/5/particle.min.js"></script>-->
+    <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <link rel="stylesheet" href="style.css" media="screen">
+    <!--[if lte IE 7]><link rel="stylesheet" href="style.ie7.css" media="screen" /><![endif]-->
+    <link rel="stylesheet" href="style.responsive.css" media="all">
 
 
-<!-- Our Javascript code for this page -->  
-<script type="text/javascript" src="testapi.js"></script>
+    <script src="jquery.js"></script>
+    <script src="script.js"></script>
+    <script src="script.responsive.js"></script>
+    <script type="text/javascript" src="js.cookie.js"></script>
+    <script type="text/javascript" src="particle.min.js"></script>
+    <script type="text/javascript" src="testapi.js"></script>
+    <!-- css -->  
+    <link rel="stylesheet" type="text/css" href="testapi.css" />
+<meta name="description" content="Description">
+<meta name="keywords" content="Keywords">
 
-<!-- css -->  
-<link rel="stylesheet" type="text/css" href="testapi.css" />
+
 </head>
 <body>
+<div id="art-main">
+<header class="art-header">
 
-<!-- displayed on login failures -->
-<div id="loginFailureDiv" class="alertBox hidden">
-<p>Correo o contraseña invalida, porfavor intenta de nuevo.</p>
-</div> <!-- loginFailureDiv -->
+    <div class="art-shapes">
+        
+            </div>
+<div class="art-slider art-slidecontainerheader" data-width="800" data-height="175">
+    <div class="art-slider-inner">
+<div class="art-slide-item art-slideheader0">
 
-<!-- displayed when an API call fails, usually because of an expired access token -->
-<div id="apiFailureDiv" class="alertBox hidden">
-<p>Ocurrio un error al acceder al API. Intentra entrar de nuevo.</p>
-</div> <!-- apiFailureDiv -->
 
-<!-- displayed to show the login screen -->
-<div id="loginDiv" class="hidden">
-<form>
-<p>Incia sesion con las credenciales de particle:</p>
-<table>
-<tr><td>Correo</td><td><input type="text" id="loginUser"/></td></tr>
-<tr><td>Contraseña</td><td><input type="password" id="loginPass" /></td></tr>
-</table>
-<input type="submit" id="loginButton"value="Iniciar Sesion"/>
-</form>
-</div> <!-- loginDiv -->
+</div>
+<div class="art-slide-item art-slideheader1">
 
-<!-- displayed to show main user interface after logging in -->
-<div id="mainDiv" class="hidden">
 
-<!-- popup menu to select a device to control -->
-<form>
-<p>Dispositivo: 
-<select id="deviceSelect">
-<option value="" selected="selected">Seleccione el dispositivo</option>
-</select></p>
-</form>
-<p>&nbsp;</p>
-
-<!-- displayed while we're waiting for a response from the device -->
-<div id="queryingDiv" class="hidden">
-<p>Trantando de conectar al dispositivo&hellip;</p>
-</div> <!-- queryingDiv -->
-
-<!-- displayed when the device doesn't support the led api -->
-<div id="wrongApiDiv" class="alertBox hidden">
-<p>El dispositivo parece tener otro codigo instalado.</p>
-</div> <!-- wrongApiDiv -->
-
-<!-- displayed when the device did not respond -->
-<div id="deviceNotAvailableDiv" class="alertBox hidden">
-<p>El dispositivo seleccionado no respondio a las solicitudes enviadas.</p>
-</div> <!-- deviceNotAvailableDiv -->
-
-<!-- normal display with the button to toggle the LED and show its state -->
-<div id="appDiv" class="hidden">
-<form>
-<p><input type="button" id="toggleButton" value="Alternar Relevador"/></p>
-<div id="ledOnDiv" class="hidden ledOn">Relevador 1 Activado</div> 
-<div id="ledOffDiv" class="hidden ledOff">Relevador 1 Desactivado</div>
-</form>
 </div>
 
-<p>&nbsp;</p>
-<form>
-<p><input type="button" id="logoutButton" value="Salir"/></p>
-</form>
+    </div>
+</div>
+<div class="art-slidenavigator art-slidenavigatorheader" data-left="0.4854497" data-top="1">
+<a href="#" class="art-slidenavigatoritem"></a><a href="#" class="art-slidenavigatoritem"></a>
+</div>
 
-</div> <!-- mainDiv -->
+
+<h1 class="art-headline">
+    <a href="/">BlueBox</a>
+</h1>
+<h2 class="art-slogan">Monitorea cualquier variable en cualquier lugar!</h2>
 
 
-</body>
-</html>
+
+
+
+                
+                    
+</header>
+<div class="art-sheet clearfix">
+    <div id="headDiv" class="hidden">
+<nav class="art-nav">
+    <ul class="art-hmenu"><li><a href="inicio.html" class="active">Inicio</a><ul class="active"><li><a href="inicio/controla-tu-dispositivo.html">Controla tu dispositivo</a></li></ul></li><li><a href="contacto.html">Contacto</a></li><li><a href="iniciar-sesion.html">Iniciar Sesion</a></li></ul> 
+    </nav>
+    </div>
+    <div id="appDiv3" class="hidden">
+            <nav class="art-nav">
+    <ul class="art-hmenu"><li><a href="inicio.html" class="active">Inicio</a><ul class="active"><li><a href="inicio/controla-tu-dispositivo.html" >Controla tu dispositivo</a></li></ul></li><li><a href="contacto.html">Contacto</a></li><li><a href="iniciar-sesion.html">Sesion Iniciada</a></li></ul> 
+                </nav>
+            </div>
+<div class="art-layout-wrapper">
+                <div class="art-content-layout">
+                    <div class="art-content-layout-row">
+                        <div class="art-layout-cell art-content"><article class="art-post art-article">
+                                
+                                                
+                <div class="art-postcontent art-postcontent-0 clearfix"><h3><span style="color: #000000;">Toma todo</span> <span style="color: #000000;">el</span> <span style="color: #000000;">control a solo un click de distancia</span></h3>
+
+<p><img width="200" height="133" alt="" src="images/contentimage3.jpg" style="float:left;" class=""></p><p style="text-align: justify;">Monitorea cualquier variable que necesites para tu empresa, negocio, casa. BlueBox es la manera mas eficaz e inovadora para tener seguridad en cualquier espacio que lo requiera.</p><p><br></p><p><br></p><p style="text-align: justify;"><br></p><p style="text-align: justify;">Contamos con la habilidad de sensar variables como gases, fuego, luminosidad, estados de puertas y ventanas, presencia, temperatura y humedad. Asi como capacidad de accionar cualquier dispositivo. Todo esto de forma remota a traves de la internet.</p>
+<br clear="all">
+<h5><br></h5></div>
+                                          
+
+</article>
+
+</div>
+                    </div>
+                </div>
+            </div><footer class="art-footer">
+<p><a href="#">About</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms</a></p>
+<p>Copyright © 2011. All Rights Reserved.</p>
+</footer>
+
+    </div>
+    <p class="art-page-footer">
+        
+    </p>
+</div>
+
+
+</body></html>

@@ -6,6 +6,7 @@ var particle = new Particle();
 var accessToken;
 var deviceId;
 var ledOn = false;
+var hasSelectedDevice;
 
 $(document).ready(function() {
 	initPage();
@@ -14,7 +15,7 @@ $(document).ready(function() {
 
 function initPage() {
 	// Hook up handlers using jquery
-	$('#loginButton').on('click', loginButtonHandler);
+	$('#Acceder').on('click', loginButtonHandler);
 	$('#logoutButton').on('click', logoutButtonHandler);
 	$('#deviceSelect').on('change', deviceSelectChange);
 	$('#toggleButton').on('click', toggleButtonHandler);
@@ -26,29 +27,46 @@ function initPage() {
 	// lifetime and is less sensitive. You may not even want to save the accessToken at all, but for
 	// this test program it's helpful because it eliminates the need to type in your username and 
 	// password every time you reload the page.
-	accessToken = Cookies.get('accessToken'); 
+	accessToken = Cookies.get('accessToken');
+	deviceId = Cookies.get('lastDeviceId');
 	if (accessToken == undefined || accessToken == '') {
 		// Show the login page
 		$('#loginDiv').show();
+		$('#loginDiv2').show();
+		$('#headDiv').show();
+		$('#headDiv2').show();
+		$('#appDiv2').hide();
+		$('#appDiv3').hide();
 	}
 	else {
 		// We have an access token, so show the main page. Note that the access token
 		// may be expired, but we'll only find that out the first time we try to use it, when
 		// we update the device list.
 		$('#mainDiv').show();
-		updateDeviceList();		
+		$('#loginDiv').hide();
+		$('#loginDiv2').hide();
+		$('#headDiv').hide();
+		$('#headDiv2').hide();
+		$('#appDiv3').show();
+		if (hasSelectedDevice){
+		 $('#appDiv2').show();
+		 $('#headDiv3').hide();
+		}
+		else  $('#headDiv3').show();
+		updateDeviceList();	
+
 	}
 }
 
 // The login button has been clicked
 function loginButtonHandler(event) {
 	// Disable the login button so it can't be clicked twice.
-	$('#loginButton').attr('disabled', 'disabled');
+	$('#Acceder').attr('disabled', 'disabled');
 	
 	// Get the username and password from the web page, then clear the password field.
-	var user = $('#loginUser').val();
-	var pass = $('#loginPass').val();
-	$('#loginPass').val('');
+	var user = $('#modlgn_username').val();
+	var pass = $('#modlgn_passwd').val();
+	$('#modlgn_passwd').val('');
 	
 	console.log('loginButtonHandler user=' + user + "pass=<hidden>");
 	
@@ -78,20 +96,23 @@ function loginButtonHandler(event) {
 			Cookies.set('accessToken', accessToken, { expires: 7 });
 			
 			// Reenable the login button
-			$('#loginButton').removeAttr('disabled');
+			$('#Acceder').removeAttr('disabled');
 						
 			// Hide all of the login related things and error messages and show the mainDiv.
 			$('#loginFailureDiv').hide();
 			$('#apiFailureDiv').hide();
 			$('#loginDiv').hide();
+			$('#loginDiv2').hide();
 			$('#mainDiv').show();
+			$('#appDiv3').show();
+			$('#headDiv').hide();
 			updateDeviceList();
 		},
 		function(err) {
 			// Failure to log in. Probably an invalid password. Could possibly be another
 			// error from the server; you might want to check for that in a real app.
 			console.log('login failed ', err);
-			$('#loginButton').removeAttr('disabled');
+			$('#Acceder').removeAttr('disabled');
 			$('#apiFailureDiv').hide();
 			$('#loginFailureDiv').show();
 		}		
@@ -172,7 +193,6 @@ function deviceSelectChange() {
 	console.log("deviceId=" + deviceId);
 	$('#wrongApiDiv').hide();
 	$('#deviceNotAvailableDiv').hide();
-	$('#appDiv').hide();
 	$('#queryingDiv').show();
 	
 	// We get a variable "led" for two reasons:
@@ -183,6 +203,9 @@ function deviceSelectChange() {
 		console.log('Device variable retrieved successfully:', data);
 		$('#queryingDiv').hide();
 		$('#appDiv').show();
+		$('#appDiv2').show();
+		$('#headDiv3').hide();
+		hasSelectedDevice=true;
 
 		ledOn = (data.body.result != 0);
 		updateLedDisplay();
@@ -254,9 +277,14 @@ function toggleButtonHandler() {
 function logoutButtonHandler() {
 	$('#mainDiv').hide();
 	$('#loginDiv').show();
+	$('#loginDiv2').show();
+	$('#headDiv').show();
+	$('#headDiv2').show();
+	$('#appDiv3').hide();
 	accessToken = '';
 	Cookies.remove('accessToken');	
 	Cookies.remove('lastDeviceId');	
+	hasSelectedDevice=false;
 }
 
 // This happens when our access token expires. Display the login screen, and API failure message, and 
@@ -265,7 +293,11 @@ function logoutButtonHandler() {
 function accessTokenErrorHandler() {
 	$('#mainDiv').hide();
 	$('#loginDiv').show();
+	$('#loginDiv2').show();
+	$('#headDiv').show();
+	$('#headDiv2').show();
 	$('#apiFailureDiv').show();
+	$('#appDiv3').hide();
 	accessToken = '';
 	Cookies.remove('accessToken');
 }
