@@ -1,4 +1,26 @@
 /* Created by Artisteer v4.3.0.60858 */
+.hidden
+{
+	display:none;
+}
+
+
+div.alertBox
+{
+	padding:5px;
+	border-style: solid;
+	border-width:3px;
+	border-color:#ff486c;
+}
+div.ledOff
+{
+	color:#bdbdbd;	
+}
+
+div.ledOn
+{
+	color:#0694e4;
+}
 
 #art-main
 {

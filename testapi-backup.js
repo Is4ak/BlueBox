@@ -28,7 +28,7 @@ function initPage() {
 	// this test program it's helpful because it eliminates the need to type in your username and 
 	// password every time you reload the page.
 	accessToken = Cookies.get('accessToken');
-	deviceId = Cookies.get('lastDeviceId');
+	//deviceId = Cookies.get('lastDeviceId');
 	if (accessToken == undefined || accessToken == '') {
 		// Show the login page
 		$('#loginDiv').show();
@@ -301,4 +301,16 @@ function accessTokenErrorHandler() {
 	accessToken = '';
 	Cookies.remove('accessToken');
 }
-
+function checkBox() {
+	// Get the checkbox
+	var checkBox = document.getElementById("modlgn_remember");
+	// Get the output text
+	var text = document.getElementById("text");
+  
+	// If the checkbox is checked, display the output text
+	if (checkBox.checked == true){
+	  text.style.display = "block";
+	} else {
+	  text.style.display = "none";
+	}
+  } 

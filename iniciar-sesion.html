@@ -15,10 +15,8 @@
     <script src="script.responsive.js"></script>
     <script type="text/javascript" src="js.cookie.js"></script>
     <script type="text/javascript" src="particle.min.js"></script>
-    <script type="text/javascript" src="testapi.js"></script>
-    <!-- css -->  
-    <link rel="stylesheet" type="text/css" href="testapi.css" />
-
+    <script type="text/javascript" src="iniciar-sesion.js"></script>
+   
 
 </head>
 <body>
@@ -51,14 +49,7 @@
 <h1 class="art-headline">
     <a href="/">BlueBox</a>
 </h1>
-<h2 class="art-slogan">Monitorea cualquier variable en cualquier lugar!</h2>
-
-
-
-
-
-                
-                    
+<h2 class="art-slogan">Monitorea cualquier variable en cualquier lugar!</h2>                    
 </header>
 <div class="art-sheet clearfix">
   <div id="headDiv" class="hidden">
@@ -68,7 +59,7 @@
 </div>
     <div id="appDiv3" class="hidden">
         <nav class="art-nav">
-     <ul class="art-hmenu"><li><a href="inicio.html" class="">Inicio</a><ul class=""><li><a href="inicio/controla-tu-dispositivo.html" class="">Controla tu dispositivo</a></li></ul></li><li><a href="contacto.html">Contacto</a></li><li><a href="iniciar-sesion.html" class="active">Sesion Iniciada</a></li></ul> 
+     <ul class="art-hmenu"><li><a href="inicio.html" class="">Inicio</a><ul class=""><li><a href="inicio/controla-tu-dispositivo.html" class="">Controla tu dispositivo</a></li></ul></li><li><a href="contacto.html">Contacto</a></li><li><a href="iniciar-sesion.html" class="active">Mis Dispositivos</a></li></ul> 
             </nav>
         </div>
 <div class="art-layout-wrapper">
@@ -99,7 +90,7 @@
     </select></p>
     </form>
     <p>&nbsp;</p>
-    
+   
     <!-- displayed while we're waiting for a response from the device -->
     <div id="queryingDiv" class="hidden">
     <p>Trantando de conectar al dispositivo&hellip;</p>
@@ -120,13 +111,10 @@
     <p>&nbsp;</p>
 <form>
 <p><input type="button" id="logoutButton" value="Salir"/></p>
-</form>
-
-              <div class="art-postcontent art-postcontent-0 clearfix"><p><br></p></div>
+</form> 
+</div>
+              <div class="art-postcontent art-postcontent-0 clearfix"><p></p></div>
                                 
-                
-
-
 </article><div class="art-block clearfix" id="loginDiv" class="hidden">
       
         <div class="art-blockheader">
@@ -146,9 +134,10 @@
     </p>
     <p id="form-login-remember">
       <label class="art-checkbox">
-      <input type="checkbox" id="modlgn_remember" name="remember" value="yes" alt="Remember Me" />Recordarme
+      <input type="checkbox" id="modlgn_remember" onclick="checkBox()" name="remember" value="yes" alt="Remember Me" />Recordarme
       </label>
     </p>
+    <p id="text" style="display:none">Checkbox is CHECKED!</p>
     <input type="submit" id="Acceder" value="Acceder" name="Acceder" class="art-button" />    
   </fieldset>
   <ul>
