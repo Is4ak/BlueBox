@@ -87,6 +87,9 @@
         <div id="headDiv3" class="hidden">
                 <p>Porfavor <b>Selecciona</b> primero cual dispositivo quieres <i> controlar.</i></p>
         </div>
+        <div id="headDiv4" class="hidden">
+        <p>El dispositivo previamente seleccionado se encuentra actualmente desconectado, porfavor <b>conecte</b> o <b>seleccione</b> el dispositivo a <i> controlar.</i></p>
+        </div>
     </div>
     </div>
 </div>
@@ -101,28 +104,64 @@
 <div class="art-content-layout">
     <div class="art-content-layout-row">
     <div class="art-layout-cell" style="width: 33%" >
-        <h3 style="text-align: center;">Relevador 1</h3><p style="text-align: center;"><img width="158" height="111" alt="" class="art-lightbox" src="../images/onlogo.jpg"><br></p><p style="text-align: center;"><span style="color: #ED1E07;">Relevador 1 Activado</span></p><p style="text-align: center;"><span style="color: #2606DB;">Relevador 1 Desactivado</span><br></p><p style="text-align: center;">&nbsp;<a href="" title="Activa el relevador 1" class="art-button">Activar</a>&nbsp;</p>
+        <h3 style="text-align: center;">Relevador 1</h3>
+        <p style="text-align: center;">
+            <img width="158" height="111" alt="" class="art-lightbox" src="../images/onlogo.gif"><br></p>
+            <div id="relay1ondiv" class="hidden">
+            <p style="text-align: center;"><span style="color: #ED1E07;">Relevador 1 Activado</span></p>
+            <p style="text-align: center;">&nbsp;<a  title="Desactiva el relevador 1" class="art-button" id="Relevador1on">Desactivar</a>&nbsp;</p></div>
+            <div id="relay1offdiv" class="hidden">
+            <p style="text-align: center;"><span style="color: #2606DB;">Relevador 1 Desactivado</span><br></p>
+            <p style="text-align: center;">&nbsp;<a  title="Activa el relevador 1" class="art-button" id="Relevador1off">Activar</a>&nbsp;</p></div>
+
     </div><div class="art-layout-cell" style="width: 34%" >
-        <h3 style="text-align: center;">Relevador 2<br></h3><p style="text-align: center;"><img width="163" height="115" alt="" class="art-lightbox" src="../images/onlogo-2.jpg"><br></p><p style="text-align: center;"><span style="color: #ED1E07;">Relevador 2 Activado</span><br></p><p style="text-align: center;"><span style="color: #2606DB;">Relevador 2 Desactivado</span><br></p><p style="text-align: center;">&nbsp;<a href="" title="Activa el relevador 2" class="art-button">Activar</a>&nbsp;<br></p>
+        <h3 style="text-align: center;">Relevador 2<br></h3>
+        <p style="text-align: center;"><img width="158" height="111" alt="" class="art-lightbox" src="../images/onlogo.gif"><br></p>
+        <div id="relay2ondiv" class="hidden">
+         <p style="text-align: center;"><span style="color: #ED1E07;">Relevador 2 Activado</span></p>
+         <p style="text-align: center;">&nbsp;<a  title="Desactiva el relevador 2" class="art-button" id="Relevador2on">Desactivar</a>&nbsp;</p></div>
+         <div id="relay2offdiv" class="hidden">
+         <p style="text-align: center;"><span style="color: #2606DB;">Relevador 2 Desactivado</span><br></p>
+         <p style="text-align: center;">&nbsp;<a  title="Activa el relevador 2" class="art-button" id="Relevador2off">Activar</a>&nbsp;</p></div>
+
     </div><div class="art-layout-cell" style="width: 33%" >
-        <h3 style="text-align: center;">Relevador 3<br></h3><p style="text-align: center;"><img width="158" height="111" alt="" class="art-lightbox" src="../images/onlogo-3.jpg"><br></p><p style="text-align: center;"><span style="color: #ED1E07;">Relevador 3 Activado</span><br></p><p style="text-align: center;"><span style="color: #2606DB;">Relevador 3 Desactivado</span><br></p><p style="text-align: center;">&nbsp;<a href="" title="Activa el relevador 3" class="art-button">Activar</a>&nbsp;<br></p>
+        <h3 style="text-align: center;">Relevador 3<br></h3>
+        <p style="text-align: center;"><img width="158" height="111" alt="" class="art-lightbox" src="../images/onlogo-3.jpg"><br></p>
+        <div id="relay3ondiv" class="hidden">
+         <p style="text-align: center;"><span style="color: #ED1E07;">Relevador 3 Activado</span></p>
+         <p style="text-align: center;">&nbsp;<a  title="Desactiva el relevador 3" class="art-button" id="Relevador3on">Desactivar</a>&nbsp;</p></div>
+         <div id="relay3offdiv" class="hidden">
+         <p style="text-align: center;"><span style="color: #2606DB;">Relevador 3 Desactivado</span><br></p>
+         <p style="text-align: center;">&nbsp;<a  title="Activa el relevador 3" class="art-button" id="Relevador3off">Activar</a>&nbsp;</p></div>
     </div>
     </div>
 </div>
+
 <div class="art-content-layout">
     <div class="art-content-layout-row">
     <div class="art-layout-cell" style="width: 50%" >
         <h3 style="text-align:center;">Relevador 4</h3>
-        <p style="text-align: center;"><img width="198" height="139" alt="" class="art-lightbox" src="../images/onlogo-4.jpg"><br></p><p style="text-align: center;"><span style="color: #ED1E07;">Relevador 4 Activado</span>&nbsp;&nbsp;&nbsp;</p><p style="text-align: center;"><span style="color: #2606DB;">Relevador 4 Desactivado</span>
-        <br></p>
-        <p style="text-align: center;"><a href="#" class="art-button" title="Activa el relevador 4">Activar</a></p>
+        <p style="text-align: center;"><img width="198" height="139" alt="" class="art-lightbox" src="../images/onlogo-4.jpg"><br></p>
+        <div id="relay4ondiv" class="hidden">
+                <p style="text-align: center;"><span style="color: #ED1E07;">Relevador 4 Activado</span></p>
+                <p style="text-align: center;">&nbsp;<a  title="Desactiva el relevador 4" class="art-button" id="Relevador4on">Desactivar</a>&nbsp;</p></div>
+                <div id="relay4offdiv" class="hidden">
+                <p style="text-align: center;"><span style="color: #2606DB;">Relevador 4 Desactivado</span><br></p>
+                <p style="text-align: center;">&nbsp;<a  title="Activa el relevador 4" class="art-button" id="Relevador4off">Activar</a>&nbsp;</p></div>
+
     </div><div class="art-layout-cell" style="width: 50%" >
         <h3 style="text-align:center;">Zumbador</h3>
-        <p style="text-align: center;"><img width="253" height="141" alt="" class="art-lightbox" src="../images/buzzer.jpg"></p><p style="text-align: center;"><span style="color: rgb(237, 30, 7);">Zumbador Activado</span><br></p><p style="text-align: center;"><span style="color: #2606DB;">Zumbador Desactivado</span><br></p>
-        <p style="text-align: center;"><a href="#" class="art-button" title="Reproduce sonido">Activar</a></p>
+        <p style="text-align: center;"><img width="198" height="139" alt="" class="art-lightbox" src="../images/buzzer.gif"></p>
+        <div id="zumbadorondiv" class="hidden">
+        <p style="text-align: center;"><span style="color: rgb(237, 30, 7);">Zumbador Activado</span><br></p>
+        <p style="text-align: center;"><a  class="art-button" title="Detiene sonido" id="Zumbadoron">Desactivar</a></p></div>
+        <div id="zumbadoroffdiv" class="hidden">
+        <p style="text-align: center;"><span style="color: #2606DB;">Zumbador Desactivado</span><br></p>
+        <p style="text-align: center;"><a class="art-button" title="Reproduce sonido" id="Zumbadoroff">Activar</a></p></div>
     </div>
     </div>
 </div>
+
 <div class="art-content-layout">
     <div class="art-content-layout-row">
     <div class="art-layout-cell" style="width: 100%" >
@@ -130,36 +169,64 @@
     </div>
     </div>
 </div>
+
 <div class="art-content-layout">
     <div class="art-content-layout-row">
     <div class="art-layout-cell" style="width: 25%" >
-        <h3 style="text-align: center;">Fuego</h3><p style="text-align: center;"><img width="79" height="112" alt="" class="art-lightbox" src="../images/fuego.jpg"><br></p><p style="text-align: center;"><span style="background-color: #941305; color: #F9FAFB;">Alerta Detectado!</span></p><p style="text-align: center;"><span style="font-weight: bold; color: rgb(11, 165, 173);"><span style="color: #0BA5AD;">Libre</span>!</span></p>
-    </div><div class="art-layout-cell" style="width: 25%" >
-        <h3 style="text-align: center;">Gas</h3><p style="text-align: center;"><img width="112" height="112" alt="" class="art-lightbox" src="../images/gas.jpg"><br></p><p style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Detectado!</span><br></p><p style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
-    </div><div class="art-layout-cell" style="width: 25%" >
-        <h3 style="text-align: center;">Presencia</h3><p style="text-align: center;"><img width="118" height="112" alt="" class="art-lightbox" src="../images/Precencia.jpg"><br></p><p style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Detectado!</span><br></p><p style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
-    </div><div class="art-layout-cell" style="width: 25%" >
-        <h3 style="text-align: center;">Ventana</h3><p style="text-align: center;"><img width="137" height="112" alt="" class="art-lightbox" src="../images/Ventana.jpg"><br></p><p style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Detectado!</span><br></p><p style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
+        <h3 style="text-align: center;">Fuego</h3>
+        <p style="text-align: center;"><img width="79" height="112" alt="" class="art-lightbox" src="../images/fuego.jpg"><br></p>
+        <p style="text-align: center;"><span style="background-color: #941305; color: #F9FAFB;">Alerta Detectado!</span></p>
+        <p style="text-align: center;"><span style="font-weight: bold; color: rgb(11, 165, 173);"><span style="color: #0BA5AD;">Libre</span>!</span></p>
+    </div>
+    <div class="art-layout-cell" style="width: 25%" >
+        <h3 style="text-align: center;">Gas</h3>
+        <p style="text-align: center;"><img width="112" height="112" alt="" class="art-lightbox" src="../images/gas.jpg"><br></p>
+        <p style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Detectado!</span><br></p>
+        <p style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
+    </div>
+    <div class="art-layout-cell" style="width: 25%" >
+        <h3 style="text-align: center;">Presencia</h3>
+        <p style="text-align: center;"><img width="118" height="112" alt="" class="art-lightbox" src="../images/Precencia.jpg"><br></p>
+        <p style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Detectado!</span><br></p>
+        <p style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
+    </div>
+    <div class="art-layout-cell" style="width: 25%" >
+        <h3 style="text-align: center;">Ventana</h3>
+        <p style="text-align: center;"><img width="137" height="112" alt="" class="art-lightbox" src="../images/Ventana.jpg"><br></p>
+        <p style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Detectado!</span><br></p>
+        <p style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
     </div>
     </div>
 </div>
 <div class="art-content-layout">
     <div class="art-content-layout-row">
     <div class="art-layout-cell" style="width: 25%" >
-        <h3 style="text-align: center;">Luminosidad</h3><p style="text-align: center;"><img width="116" height="116" alt="" class="art-lightbox" src="../images/luminosidad.jpg"><br></p><p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p><p><br></p>
-    </div><div class="art-layout-cell" style="width: 25%" >
-        <h3 style="text-align: center;">Temperatura</h3><p style="text-align: center;"><img width="117" height="117" alt="" class="art-lightbox" src="../images/Temperatura.png"><br></p><p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p>
-    </div><div class="art-layout-cell" style="width: 25%" >
-        <h3 style="text-align: center;">Humedad</h3><p style="text-align: center;"><img width="120" height="113" alt="" class="art-lightbox" src="../images/Humedad.png"><br></p><p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p>
-    </div><div class="art-layout-cell" style="width: 25%" >
-        <h3 style="text-align: center;">Puerta</h3><p style="text-align: center;"><img width="120" height="112" alt="" class="art-lightbox" src="../images/Puerta.jpg"><br></p><p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p>
+        <h3 style="text-align: center;">Luminosidad</h3>
+        <p style="text-align: center;"><img width="116" height="116" alt="" class="art-lightbox" src="../images/luminosidad.jpg"><br></p>
+        <p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p><p><br></p>
+    </div>
+    <div class="art-layout-cell" style="width: 25%" >
+        <h3 style="text-align: center;">Temperatura</h3>
+        <p style="text-align: center;"><img width="117" height="117" alt="" class="art-lightbox" src="../images/Temperatura.png"><br></p>
+        <p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p>
+    </div>
+    <div class="art-layout-cell" style="width: 25%" >
+        <h3 style="text-align: center;">Humedad</h3>
+        <p style="text-align: center;"><img width="120" height="113" alt="" class="art-lightbox" src="../images/Humedad.png"><br></p>
+        <p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p>
+    </div>
+    <div class="art-layout-cell" style="width: 25%" >
+        <h3 style="text-align: center;">Puerta</h3>
+        <p style="text-align: center;"><img width="120" height="112" alt="" class="art-lightbox" src="../images/Puerta.jpg"><br></p>
+        <p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p>
     </div>
     </div>
 </div>
 <div class="art-content-layout">
     <div class="art-content-layout-row">
-    <div class="art-layout-cell" style="width: 100%" >
+    <div class="art-layout-cell" style="width: 100%" id="events" >
         <h2 style="text-align: center;"><span style="color: #25292C;">Eventos</span></h2><p><br></p>
+        
     </div>
     </div>
 </div>

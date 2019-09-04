@@ -5,9 +5,11 @@ var particle = new Particle();
 // Global variables
 var accessToken;
 var deviceId;
-var ledOn = false;
-var hasSelectedDevice;
-
+var relay1On = false;
+var relay2On =false;
+var relay3On= false;
+var relay4On =false;
+var zumbadorOn=false;
 $(document).ready(function() {
 	initPage();
 });
@@ -15,10 +17,21 @@ $(document).ready(function() {
 
 function initPage() {
 	// Hook up handlers using jquery
-	$('#Acceder').on('click', loginButtonHandler);
 	$('#logoutButton').on('click', logoutButtonHandler);
-	$('#deviceSelect').on('change', deviceSelectChange);
-	$('#toggleButton').on('click', toggleButtonHandler);
+	//Relays
+	$('#Relevador1on').on('click', relevador1Handler);
+	$('#Relevador1off').on('click', relevador1Handler);
+	$('#Relevador2on').on('click', relevador2Handler);
+	$('#Relevador2off').on('click', relevador2Handler);
+	$('#Relevador3on').on('click', relevador3Handler);
+	$('#Relevador3off').on('click', relevador3Handler);
+	$('#Relevador4on').on('click', relevador4Handler);
+	$('#Relevador4off').on('click', relevador4Handler);
+	// Buzzer
+	$('#Zumbadoron').on('click', zumbadorHandler);
+	$('#Zumbadoroff').on('click', zumbadorHandler);
+	
+	
 	
 	// Read the access token from a browser cookie, if we can. This uses js-cookie.js, which is much
 	// easier than coding for each browser quirk you might encounter.
@@ -30,9 +43,7 @@ function initPage() {
 	accessToken = Cookies.get('accessToken');
 	deviceId = Cookies.get('lastDeviceId');
 	if (accessToken == undefined || accessToken == '') {
-		// Show the login page
-		$('#loginDiv').show();
-		$('#loginDiv2').show();
+		// Show messages
 		$('#headDiv').show();
 		$('#headDiv2').show();
 		$('#appDiv2').hide();
@@ -42,173 +53,60 @@ function initPage() {
 		// We have an access token, so show the main page. Note that the access token
 		// may be expired, but we'll only find that out the first time we try to use it, when
 		// we update the device list.
-		$('#mainDiv').show();
-		$('#loginDiv').hide();
-		$('#loginDiv2').hide();
 		$('#headDiv').hide();
 		$('#headDiv2').hide();
 		$('#appDiv3').show();
 		if (deviceId == undefined || deviceId == ''){
-		 
+		 $('#appDiv2').hide();
 		  $('#headDiv3').show();
-		updateDeviceList();
 		}
 		else {$('#appDiv2').show();
-		 $('#headDiv3').hide();	}
-
+		 $('#headDiv3').hide();	
+		  particle.getEventStream({ deviceId: deviceId, name: 'Alarm', auth: accessToken }).then(function(stream) {
+			stream.on('event', eventHandler);
+		});
+		
+		 checkDevConnected();
+		 updateLedDisplay();
+		
+		 }
 	}
 }
+function checkDevConnected(){
+	particle.getEventStream({ deviceId:deviceId, auth: accessToken }).then(function(stream) {
+  stream.on('event', function(data) {
+    console.log("Event: ", data);
+  });
+});
+	var devicesPr = particle.getDevice({ deviceId:deviceId, auth: accessToken });
 
-// The login button has been clicked
-function loginButtonHandler(event) {
-	// Disable the login button so it can't be clicked twice.
-	$('#Acceder').attr('disabled', 'disabled');
-	
-	// Get the username and password from the web page, then clear the password field.
-	var user = $('#modlgn_username').val();
-	var pass = $('#modlgn_passwd').val();
-	$('#modlgn_passwd').val('');
-	
-	console.log('loginButtonHandler user=' + user + "pass=<hidden>");
-	
-	// Log in using the Particle API. Note that the password isn't saved anywhere, and it's 
-	// sent up to the Particle servers directly, not going through my server, for example. 
-	// We get back an access token that we use for other calls.
-	
-	// Also note: The particle API uses the promise pattern for functions. Each call
-	// has something like the call name ("particle.login") a set of parameters specific to 
-	// that call, as an object ({username:user, password:pass}) followed by a then() expression.
-	//
-	// These calls take a while to execute, and Javascript programs should not hold up
-	// execution waiting for things to complete. This call merely starts the processing and
-	// more or less immediately returns.
-	//
-	// The code in the then() expression is executed when the operation is finally complete.
-	// The first function executes if the operation succeeds. The second function executes
-	// if an error occurs. 
-	
-	particle.login({username:user, password:pass}).then(
-		function(data) {
-			// Executed if login completes successfully
-			accessToken = data.body.access_token;
-			console.log("accessToken=" + accessToken);
-			
-			// Save in a browser cookie that expires in 7 days
-			Cookies.set('accessToken', accessToken, { expires: 7 });
-			
-			// Reenable the login button
-			$('#Acceder').removeAttr('disabled');
-						
-			// Hide all of the login related things and error messages and show the mainDiv.
-			$('#loginFailureDiv').hide();
-			$('#apiFailureDiv').hide();
-			$('#loginDiv').hide();
-			$('#loginDiv2').hide();
-			$('#mainDiv').show();
-			$('#appDiv3').show();
-			$('#headDiv').hide();
-			updateDeviceList();
-		},
-		function(err) {
-			// Failure to log in. Probably an invalid password. Could possibly be another
-			// error from the server; you might want to check for that in a real app.
-			console.log('login failed ', err);
-			$('#Acceder').removeAttr('disabled');
-			$('#apiFailureDiv').hide();
-			$('#loginFailureDiv').show();
-		}		
-	);
-	
-	// Note that when this code is executed, the login operation hasn't completed yet.
-	// The code in the then() expression is what gets executed later, when the login
-	// actually completes.
-	
-	// This prevents the Submit button from trying to change the page we're on.
-	event.preventDefault();
-}
-
-// This function is called to update the popup menu of devices
-function updateDeviceList() {
-	
-	// We save the last selected device id in a browser cookie, so it will be selected the
-	// next time you open the web page.
-	var lastDeviceId = Cookies.get('lastDeviceId');
-	
-	// Use the listDevices API 
-	particle.listDevices({ auth: accessToken }).then(
-		function(devices) {
-			for(var ii = 0; ii < devices.body.length; ii++) {
-				var dev = devices.body[ii];
-				console.log("dev ii=" + ii, dev);
-				
-				// The entries that come back have the following things in dev:
-				// cellular: false
-				// connected: true
-				// id: "<yourdeviceid>"
-				// last_app: null
-				// last_heard: "2016-03-18T18:11:36.183Z"
-				// last_ip_address: "<youripaddress>"
-				// name: "test4"
-				// platform_id: 6
-				// product_id: 6
-				// status: "normal"
-				
-				if (dev.connected) {
-					var sel = '';
-					
-					// This device ID matches the one in the cookie, so mark it as selected
-					if (dev.id == lastDeviceId) {
-						sel = 'selected="selected" ';
-					}
-					
-					var html = '<option value="' + dev.id + '" ' + sel + '>' + dev.name + '</option>';
-					$('#deviceSelect').append(html);
-				}
-			}
-			// If we selected a device in lastDeviceId, load the initial state now
-			deviceSelectChange();
-		},	
-		function(err) {
-			// This can happen when a saved access token has expired. If so, remove the saved
-			// access token and display the login page.
-			console.log('listDevices failed ', err);
-			accessTokenErrorHandler();
-		}
-	);
-	
-}
-
-function deviceSelectChange() {
-	deviceId = $('#deviceSelect').val();
-	if (deviceId == '') {
-		return;
+devicesPr.then(
+  function(data){
+    console.log('Device attrs retrieved successfully:(if trying to control and this appears you probably have the wrong app on device)', data);
+	if (data.body.connected) {
+	 $('#appDiv2').show();
+	$('#headDiv4').hide();	}
+	else {
+	$('#appDiv2').hide();
+     $('#headDiv4').show();
 	}
-	
-	// Save the selected deviceId in a browser cookie for 7 days
-	Cookies.set('lastDeviceId', deviceId, { expires: 7 });
-	
-	// Getting a variable is normally fast for a Photon, under a second. It make take a second or two with an
-	// Electron, especially for the first it has been used in a while. If you select a device that's offline, it 
-	// takes a long time (maybe 30 seconds? I didn't actually time it) to get the error back.
-	// Show a progress message in queryingDiv while it's processing.
-	console.log("deviceId=" + deviceId);
-	$('#wrongApiDiv').hide();
-	$('#deviceNotAvailableDiv').hide();
-	$('#queryingDiv').show();
-	
-	// We get a variable "led" for two reasons:
-	// 1. To better guess whether we've selected a device with the right firmware.
-	// 2. To get the initial state of the LED. We subscribe to events when the value changes, but we use a variable
-	// to find out the initial state. This is a concern when the LED is on already when we open the web page.
-	particle.getVariable({ deviceId: deviceId, name: 'luz', auth: accessToken }).then(function(data) {
+  },
+  function(err) {
+    console.log('API call failed: ', err);
+	$('#appDiv2').hide();
+    $('#headDiv2').show();
+  }
+);
+}
+/*particle.getVariable({ deviceId: deviceId, name: 'luz', auth: accessToken }).then(function(data) {
 		console.log('Device variable retrieved successfully:', data);
 		$('#queryingDiv').hide();
 		$('#appDiv').show();
-		$('#appDiv2').show();
+		//$('#appDiv2').show();
 		$('#headDiv3').hide();
 		hasSelectedDevice=true;
 
-		ledOn = (data.body.result != 0);
+		relay1On = (data.body.result != 0);
 		updateLedDisplay();
 		
 		// We were able to get the "led" variable, so we probably have the right firmware running.
@@ -228,52 +126,164 @@ function deviceSelectChange() {
 			// Device did not respond is 408 but in this test code we just show that message for all errors
 			$('#deviceNotAvailableDiv').show();			
 		}
-	});
-}
+	});*/
+
+
+
 
 // Called when a "led" event is sent by the Photon. We subscribe to this in deviceSelectChange.
-function ledEventHandler(data) {
-	console.log('ledEventHandler ', data);
-
-	if (data.coreid != deviceId) {
+function eventHandler(data) {
+    console.log("eventHandler: ", data);
+	//var cadena= data;
+	//$(".events").append(document.write('nuevo evento recibido: '+events()));
+	//if (data.coreid != deviceId) {
 		// This happens if you switch devices, because I'm not actually sure how to stop getting a device stream
-		return;
-	}
-	ledOn = (data.data == '1');
-	updateLedDisplay();
+	//	return;
+	//}
+	//relay1On = (data.data == '1');
+	//updateLedDisplay();
 }
 
-// Shows the appropriate string based on the value on ledOn (true/false)
+// Shows the appropriate string based on the value on relay1On (true/false)
 function updateLedDisplay() {
-	if (ledOn) {
-		$('#ledOnDiv').show();
-		$('#ledOffDiv').hide();
+	if (relay1On) {
+		$('#relay1ondiv').show();
+		$('#relay1offdiv').hide();
 	}
 	else {
-		$('#ledOnDiv').hide();		
-		$('#ledOffDiv').show();		
+		$('#relay1ondiv').hide();		
+		$('#relay1offdiv').show();		
 	}
+	if (relay2On) {
+		$('#relay2ondiv').show();
+		$('#relay2offdiv').hide();
+	}
+	else {
+		$('#relay2ondiv').hide();		
+		$('#relay2offdiv').show();		
+	}
+	if (relay3On) {
+		$('#relay3ondiv').show();
+		$('#relay3offdiv').hide();
+	}
+	else {
+		$('#relay3ondiv').hide();		
+		$('#relay3offdiv').show();		
+	}
+	if (relay4On) {
+		$('#relay4ondiv').show();
+		$('#relay4offdiv').hide();
+	}
+	else {
+		$('#relay4ondiv').hide();		
+		$('#relay4offdiv').show();		
+	}
+	if (zumbadorOn) {
+		$('#zumbadorondiv').show();
+		$('#zumbadoroffdiv').hide();
+	}
+	else {
+		$('#zumbadorondiv').hide();		
+		$('#zumbadoroffdiv').show();		
+	}
+	
 }
 
 // This is called when the Toggle LED button is clicked. 
-function toggleButtonHandler() {
-	
-	ledOn = !ledOn;
-	updateLedDisplay();
+function relevador1Handler() {
 	
 	// The setled Particle cloud function takes a string of the state to set, either "1" or "0"
-	var arg = (ledOn ? "on1" : "off1");
+	var arg = (relay1On? "off1" : "on1");
 	
 	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
 		function(data) {
-			console.log('setled success ', data);
+			console.log('relaySet success ', data);
+           	relay1On = !relay1On;
+	        updateLedDisplay();
 		}, function(err) {
-			console.log('setled error ', err);
+			console.log('relaySet error checking if dev connected', err);
+			checkDevConnected()
+		});
+
+	
+}
+function relevador2Handler() {
+	
+	
+	
+	// The setled Particle cloud function takes a string of the state to set, either "1" or "0"
+	var arg = (relay2On ? "off2" : "on2");
+	
+	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
+		function(data) {
+			console.log('relaySet success ', data);
+			relay2On = !relay2On;
+	        updateLedDisplay();
+		}, function(err) {
+			console.log('relaySet error checking if dev connected', err);
+			checkDevConnected();
+		});
+
+	
+}
+function relevador3Handler() {
+	
+	
+    
+	// The setled Particle cloud function takes a string of the state to set, either "1" or "0"
+	var arg = (relay3On ? "off3" : "on3");
+	
+	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
+		function(data) {
+			console.log('relaySet success ', data);
+			relay3On = !relay3On;
+	        updateLedDisplay();
+		}, function(err) {
+			console.log('relaySet error checking if dev connected', err);
+			checkDevConnected();//si esta conectado es probable que no tenga el codigo correcto el dispositivo photon
+		});
+
+	
+}
+function relevador4Handler() {
+	
+	
+	
+	// The setled Particle cloud function takes a string of the state to set, either "1" or "0"
+	var arg = (relay4On ? "off4" : "on4");
+	
+	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
+		function(data) {
+			console.log('relaySet success ', data);
+			relay4On = !relay4On;
+	updateLedDisplay();
+		}, function(err) {
+			console.log('relaySet error checking if dev connected', err);
+			checkDevConnected();
 		});
 
 	
 }
 
+function zumbadorHandler() {
+	
+
+	// The setled Particle cloud function takes a string of the state to set, either "1" or "0"
+	var arg = (zumbadorOn ? "off" : "on");
+	
+	particle.callFunction({ deviceId:deviceId, name: 'zumbador', argument: arg, auth: accessToken }).then(
+		function(data) {
+			console.log('soundSet success ', data);
+			zumbadorOn = !zumbadorOn;
+			updateLedDisplay();
+		}, function(err) {
+			console.log('soundSet error checking if dev connected ', err);
+			checkDevConnected();
+			
+		});
+
+	
+}
 // This handles the logout button. Show the login screen and also remove our cookies.
 function logoutButtonHandler() {
 	$('#mainDiv').hide();
@@ -285,7 +295,7 @@ function logoutButtonHandler() {
 	accessToken = '';
 	Cookies.remove('accessToken');	
 	Cookies.remove('lastDeviceId');	
-	hasSelectedDevice=false;
+
 }
 
 // This happens when our access token expires. Display the login screen, and API failure message, and 
@@ -302,4 +312,5 @@ function accessTokenErrorHandler() {
 	accessToken = '';
 	Cookies.remove('accessToken');
 }
+
 
