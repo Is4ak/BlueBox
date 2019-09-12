@@ -10,6 +10,9 @@ var relay2On =false;
 var relay3On= false;
 var relay4On =false;
 var zumbadorOn=false;
+var fuego,luz,gas,ventana,presencia,puerta,temperatura;
+accessToken = Cookies.get('accessToken');
+	deviceId = Cookies.get('lastDeviceId');
 $(document).ready(function() {
 	initPage();
 });
@@ -40,8 +43,7 @@ function initPage() {
 	// lifetime and is less sensitive. You may not even want to save the accessToken at all, but for
 	// this test program it's helpful because it eliminates the need to type in your username and 
 	// password every time you reload the page.
-	accessToken = Cookies.get('accessToken');
-	deviceId = Cookies.get('lastDeviceId');
+	
 	if (accessToken == undefined || accessToken == '') {
 		// Show messages
 		$('#headDiv').show();
@@ -62,22 +64,41 @@ function initPage() {
 		}
 		else {$('#appDiv2').show();
 		 $('#headDiv3').hide();	
-		  particle.getEventStream({ deviceId: deviceId, name: 'Alarm', auth: accessToken }).then(function(stream) {
-			stream.on('event', eventHandler);
-		});
+         checkDevConnected();
+		 particle.getVariable({ deviceId:deviceId, name: 'temp-C', auth: accessToken }).then(function(data) {
+			 console.log('Device variable retrieved successfully:', data);
+			  
+			 temperatura=data.body.result;
+             checkVarStatus();
+
+ 			 particle.getEventStream({ deviceId:deviceId, auth: accessToken }).then(function (stream) {
+			 stream.on('event', function(event) {
+			  //console.log("Event: ", event);
+			  $("#events").html("Nuevo evento publicado:" + event.name +" "+ event.data);
+			  eventHandler(event);
+			  });
+		       },
+		      function(err){
+			  console.log("failed to get event",err);
+		      });
+			
+		  }, function(err) {
+			console.log('An error occurred while getting attrs:', err);
+			$('#appDiv2').hide();
+			$('#headDiv5').Show();	
+		  });
+
 		
-		 checkDevConnected();
+		 
 		 updateLedDisplay();
 		
 		 }
 	}
 }
+
+
 function checkDevConnected(){
-	particle.getEventStream({ deviceId:deviceId, auth: accessToken }).then(function(stream) {
-  stream.on('event', function(data) {
-    console.log("Event: ", data);
-  });
-});
+	
 	var devicesPr = particle.getDevice({ deviceId:deviceId, auth: accessToken });
 
 devicesPr.then(
@@ -97,6 +118,38 @@ devicesPr.then(
     $('#headDiv2').show();
   }
 );
+}
+
+function checkVarStatus(){
+	particle.getVariable({ deviceId:deviceId, name: 'Relevador1', auth: accessToken }).then(function(data) {
+		console.log('Device variable relevador1 retrieved successfully:', data);
+        relay1On = (data.body.result == 0);
+		updateLedDisplay();
+	  }, function(err) {
+		console.log('An error occurred while getting attrs:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'Relevador2', auth: accessToken }).then(function(data) {
+		console.log('Device variable relevador2 retrieved successfully:', data);
+        relay2On = (data.body.result == 0);
+		updateLedDisplay();
+	  }, function(err) {
+		console.log('An error occurred while getting attrs:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'Relevador3', auth: accessToken }).then(function(data) {
+		console.log('Device variable relevador3 retrieved successfully:', data);
+        relay3On = (data.body.result == 0);
+		updateLedDisplay();
+	  }, function(err) {
+		console.log('An error occurred while getting attrs:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'Relevador4', auth: accessToken }).then(function(data) {
+		console.log('Device variable relevador4 retrieved successfully:', data);
+        relay4On = (data.body.result == 0);
+		updateLedDisplay();
+	  }, function(err) {
+		console.log('An error occurred while getting attrs:', err);
+	  });
+	  
 }
 /*particle.getVariable({ deviceId: deviceId, name: 'luz', auth: accessToken }).then(function(data) {
 		console.log('Device variable retrieved successfully:', data);
@@ -132,16 +185,71 @@ devicesPr.then(
 
 
 // Called when a "led" event is sent by the Photon. We subscribe to this in deviceSelectChange.
-function eventHandler(data) {
-    console.log("eventHandler: ", data);
+function eventHandler(event) {
+	console.log("eventHandler: ", event);
+	if (event.name=='Luminosidad'){
+		$('#luz').html("<b>Valor LDR:</b> " + event.data);
+	}
+	else if (event.name=='DHT22'){
+
+	}
+switch(event.data){
+	case 'Presencia Detectada':
+			$('#presenciaD').show();
+			$('#presenciaL').hide();
+			break;
+	case 'Presencia Libre':
+			$('#presenciaL').show();
+			$('#presenciaD').hide();
+			break;
+	case 'Fire Detected':
+			$('#fuegoD').show();
+			$('#fuegoL').hide();
+			break;
+	case 'Fire Free':
+			$('#fuegoL').show();
+			$('#fuegoD').hide();
+			break;
+	case 'Gas Detectado':
+			$('#gasD').show();
+			$('#gasL').hide();
+			break;
+	case 'Gas Libre':
+			$('#gasL').show();
+			$('#gasD').hide();
+			break;
+	case 'Ventana Abierta':
+			$('#ventanaA').show();
+			$('#ventanaC').hide();
+			break;
+	case 'Ventana Cerrada':
+			$('#ventanaC').show();
+			$('#ventanaA').hide();
+			break;
+	case 'Door Open':
+			$('#PuertaA').show();
+			$('#PuertaC').hide();
+			break;
+    case 'Door Closed':
+			$('#PuertaC').show();
+			$('#PuertaA').hide();
+			break;		
+			
+	default: break;
+}
+
+
 	//var cadena= data;
 	//$(".events").append(document.write('nuevo evento recibido: '+events()));
 	//if (data.coreid != deviceId) {
 		// This happens if you switch devices, because I'm not actually sure how to stop getting a device stream
 	//	return;
+//	(event.data=='Presencia Detectada'){
+//		$('#presenciaD').show();
+//		$('#presenciaL').hide();
 	//}
-	//relay1On = (data.data == '1');
-	//updateLedDisplay();
+	relay1On = (data.data == '1');
+	updateLedDisplay();
 }
 
 // Shows the appropriate string based on the value on relay1On (true/false)

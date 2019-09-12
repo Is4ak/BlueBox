@@ -10,12 +10,17 @@
     <!--[if lte IE 7]><link rel="stylesheet" href="../style.ie7.css" media="screen" /><![endif]-->
     <link rel="stylesheet" href="../style.responsive.css" media="all">
 
-
-    <script src="../jquery.js"></script>
+   <!-- <script
+    src="http://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>-->
+   <script src="../jquery.js"></script>
     <script src="../script.js"></script>
     <script src="../script.responsive.js"></script>
-    <script type="text/javascript" src="../js.cookie.js"></script>
-    <script type="text/javascript" src="../particle.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>-->
+   <script type="text/javascript" src="../js.cookie.js"></script>
+   <!-- <script type="text/javascript" src="../particle.min.js"></script>-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particle-api-js@8/dist/particle.min.js"> </script>
     <script type="text/javascript" src="controla-tu-dispositivo.js"></script>
    
 <meta name="description" content="Description">
@@ -90,6 +95,9 @@
         <div id="headDiv4" class="hidden">
         <p>El dispositivo previamente seleccionado se encuentra actualmente desconectado, porfavor <b>conecte</b> o <b>seleccione</b> el dispositivo a <i> controlar.</i></p>
         </div>
+        <div id="headDiv5" class="hidden">
+            <p>El dispositivo previamente seleccionado <b> no tiene el codigo programado!!</b></p>
+            </div>
     </div>
     </div>
 </div>
@@ -175,26 +183,26 @@
     <div class="art-layout-cell" style="width: 25%" >
         <h3 style="text-align: center;">Fuego</h3>
         <p style="text-align: center;"><img width="79" height="112" alt="" class="art-lightbox" src="../images/fuego.jpg"><br></p>
-        <p style="text-align: center;"><span style="background-color: #941305; color: #F9FAFB;">Alerta Detectado!</span></p>
-        <p style="text-align: center;"><span style="font-weight: bold; color: rgb(11, 165, 173);"><span style="color: #0BA5AD;">Libre</span>!</span></p>
+        <p id = "fuegoD" class="hidden" style="text-align: center;"><span style="background-color: #941305; color: #F9FAFB;">Alerta Fuego Detectado!</span></p>
+        <p id = "fuegoL" class="hidden" style="text-align: center;"><span style="font-weight: bold; color: rgb(11, 165, 173);"><span style="color: #0BA5AD;">Libre</span>!</span></p>
     </div>
     <div class="art-layout-cell" style="width: 25%" >
         <h3 style="text-align: center;">Gas</h3>
         <p style="text-align: center;"><img width="112" height="112" alt="" class="art-lightbox" src="../images/gas.jpg"><br></p>
-        <p style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Detectado!</span><br></p>
-        <p style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
+        <p id = "gasD" class="hidden" style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Gas Detectado!</span><br></p>
+        <p id = "gasL" class="hidden" style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
     </div>
     <div class="art-layout-cell" style="width: 25%" >
         <h3 style="text-align: center;">Presencia</h3>
         <p style="text-align: center;"><img width="118" height="112" alt="" class="art-lightbox" src="../images/Precencia.jpg"><br></p>
-        <p style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Detectado!</span><br></p>
-        <p style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
+        <p  id = "presenciaD" class="hidden" style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Presencia Detectada!</span><br></p>
+        <p id = "presenciaL" class="hidden" style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
     </div>
     <div class="art-layout-cell" style="width: 25%" >
         <h3 style="text-align: center;">Ventana</h3>
         <p style="text-align: center;"><img width="137" height="112" alt="" class="art-lightbox" src="../images/Ventana.jpg"><br></p>
-        <p style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Detectado!</span><br></p>
-        <p style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Libre!</span><br></p>
+        <p id = "ventanaA" class="hidden" style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Ventana Abierta!</span><br></p>
+        <p id = "ventanaC" class="hidden" style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Ventana Cerrada!</span><br></p>
     </div>
     </div>
 </div>
@@ -203,30 +211,33 @@
     <div class="art-layout-cell" style="width: 25%" >
         <h3 style="text-align: center;">Luminosidad</h3>
         <p style="text-align: center;"><img width="116" height="116" alt="" class="art-lightbox" src="../images/luminosidad.jpg"><br></p>
-        <p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p><p><br></p>
+        <p style="text-align: center;"><span id ="luz" style="font-weight: bold;">Luminosidad </span></p><p><br></p>
     </div>
     <div class="art-layout-cell" style="width: 25%" >
         <h3 style="text-align: center;">Temperatura</h3>
         <p style="text-align: center;"><img width="117" height="117" alt="" class="art-lightbox" src="../images/Temperatura.png"><br></p>
-        <p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p>
+        <p style="text-align: center;"><span id = "temperatura" style="font-weight: bold;">Valor</span></p>
     </div>
     <div class="art-layout-cell" style="width: 25%" >
         <h3 style="text-align: center;">Humedad</h3>
         <p style="text-align: center;"><img width="120" height="113" alt="" class="art-lightbox" src="../images/Humedad.png"><br></p>
-        <p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p>
+        <p style="text-align: center;"><span id= "humedad" style="font-weight: bold;">Valor</span></p>
     </div>
     <div class="art-layout-cell" style="width: 25%" >
         <h3 style="text-align: center;">Puerta</h3>
         <p style="text-align: center;"><img width="120" height="112" alt="" class="art-lightbox" src="../images/Puerta.jpg"><br></p>
-        <p style="text-align: center;"><span style="font-weight: bold;">Valor</span></p>
+        <p id = "puertaA" class="hidden" style="text-align: center;"><span style="background-color: #941305; color: #FFFFFF;">Alerta Puerta Abierta!</span><br></p>
+        <p id = "puertaC" class="hidden" style="text-align: center;"><span style="text-align: center; font-weight: bold; color: #0BA3AB;">Puerta Cerrada!</span><br></p>
     </div>
     </div>
 </div>
 <div class="art-content-layout">
     <div class="art-content-layout-row">
-    <div class="art-layout-cell" style="width: 100%" id="events" >
+    <div class="art-layout-cell" style="width: 100%" >
         <h2 style="text-align: center;"><span style="color: #25292C;">Eventos</span></h2><p><br></p>
-        
+         <div id="events">
+
+         </div>
     </div>
     </div>
 </div>
