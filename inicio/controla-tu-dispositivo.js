@@ -74,7 +74,7 @@ function initPage() {
  			 particle.getEventStream({ deviceId:deviceId, auth: accessToken }).then(function (stream) {
 			 stream.on('event', function(event) {
 			  //console.log("Event: ", event);
-			  $("#events").html("Nuevo evento publicado:" + event.name +" "+ event.data);
+			  $("#events").append("<br><b>Nuevo evento publicado:</b>  " + event.name +": "+ event.data + " <b>con fecha:</b> "+event.published_at );
 			  eventHandler(event);
 			  });
 		       },
@@ -115,7 +115,8 @@ devicesPr.then(
   function(err) {
     console.log('API call failed: ', err);
 	$('#appDiv2').hide();
-    $('#headDiv2').show();
+	$('#headDiv2').show();
+	
   }
 );
 }
@@ -126,63 +127,129 @@ function checkVarStatus(){
         relay1On = (data.body.result == 0);
 		updateLedDisplay();
 	  }, function(err) {
-		console.log('An error occurred while getting attrs:', err);
+		console.log('An error occurred while getting attrs relevador 1:', err);
 	  });
 	  particle.getVariable({ deviceId:deviceId, name: 'Relevador2', auth: accessToken }).then(function(data) {
 		console.log('Device variable relevador2 retrieved successfully:', data);
         relay2On = (data.body.result == 0);
 		updateLedDisplay();
 	  }, function(err) {
-		console.log('An error occurred while getting attrs:', err);
+		console.log('An error occurred while getting attrs relevador 2:', err);
 	  });
 	  particle.getVariable({ deviceId:deviceId, name: 'Relevador3', auth: accessToken }).then(function(data) {
 		console.log('Device variable relevador3 retrieved successfully:', data);
         relay3On = (data.body.result == 0);
 		updateLedDisplay();
 	  }, function(err) {
-		console.log('An error occurred while getting attrs:', err);
+		console.log('An error occurred while getting attrs relevador 3:', err);
 	  });
 	  particle.getVariable({ deviceId:deviceId, name: 'Relevador4', auth: accessToken }).then(function(data) {
 		console.log('Device variable relevador4 retrieved successfully:', data);
         relay4On = (data.body.result == 0);
 		updateLedDisplay();
 	  }, function(err) {
-		console.log('An error occurred while getting attrs:', err);
+		console.log('An error occurred while getting attrs relevador 4:', err);
 	  });
-	  
-}
-/*particle.getVariable({ deviceId: deviceId, name: 'luz', auth: accessToken }).then(function(data) {
-		console.log('Device variable retrieved successfully:', data);
-		$('#queryingDiv').hide();
-		$('#appDiv').show();
-		//$('#appDiv2').show();
-		$('#headDiv3').hide();
-		hasSelectedDevice=true;
-
-		relay1On = (data.body.result != 0);
+	  particle.getVariable({ deviceId:deviceId, name: 'Fuego', auth: accessToken }).then(function(data) {
+		console.log('Device variable fuego retrieved successfully:', data);
+		if (data.body.result == 1){
+			$('#fuegoD').show();
+			$('#fuegoL').hide();
+		}
+		else if (data.body.result==0){
+			$('#fuegoL').show();
+			$('#fuegoD').hide();
+		}
+	
+	  }, function(err) {
+		console.log('An error occurred while getting attrs fuego:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'Gas', auth: accessToken }).then(function(data) {
+		console.log('Device variable Gas retrieved successfully:', data);
+		if (data.body.result == 1){
+			$('#gasD').show();
+			$('#gasL').hide();
+		}
+		else if (data.body.result==0){
+			$('#gasL').show();
+			$('#gasD').hide();
+		}
+	
+	  }, function(err) {
+		console.log('An error occurred while getting attrs gas:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'Ventana', auth: accessToken }).then(function(data) {
+		console.log('Device variable ventana retrieved successfully:', data);
+		if (data.body.result == 1){
+			$('#ventanaA').show();
+			$('#ventanaC').hide();
+		}
+		else if (data.body.result==0){
+			$('#ventanaC').show();
+			$('#ventanaA').hide();
+		}
+	
+	  }, function(err) {
+		console.log('An error occurred while getting attrs ventana:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'presencia', auth: accessToken }).then(function(data) {
+		console.log('Device variable presencia retrieved successfully:', data);
+		if (data.body.result == 1){
+			$('#presenciaD').show();
+			$('#presenciaL').hide();
+		}
+		else if (data.body.result==0){
+			$('#presenciaL').show();
+			$('#presenciaD').hide();
+		}
+	
+	  }, function(err) {
+		console.log('An error occurred while getting attrs presencia:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'Puerta', auth: accessToken }).then(function(data) {
+		console.log('Device variable puerta retrieved successfully:', data);
+		if (data.body.result == 1){
+			$('#puertaA').show();
+			$('#puertaC').hide();
+		}
+		else if (data.body.result==0){
+			$('#puertaC').show();
+			$('#puertaA').hide();
+		}
+	
+	  }, function(err) {
+		console.log('An error occurred while getting attrs puerta:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'Zumbador', auth: accessToken }).then(function(data) {
+		console.log('Device variable zumbador retrieved successfully:', data);
+		zumbadorOn = (data.body.result == 1);
 		updateLedDisplay();
-		
-		// We were able to get the "led" variable, so we probably have the right firmware running.
-		// Subscribe to the led event stream so we will be notified when the status changes.
-		particle.getEventStream({ deviceId: deviceId, name: 'Alarm', auth: accessToken }).then(function(stream) {
-			stream.on('event', ledEventHandler);
-		});
-	}, function(err) {
-		// We try to get the "led" variable. If this causes an error, then the selected device probably
-		// isn't running our code. Show the error message in wrongApiDiv.
-		console.log('failure trying to get led variable ', err);
-		$('#queryingDiv').hide();
-		if (err.statusCode == 404) {
-			$('#wrongApiDiv').show();
-		}
-		else {
-			// Device did not respond is 408 but in this test code we just show that message for all errors
-			$('#deviceNotAvailableDiv').show();			
-		}
-	});*/
 
-
-
+	  }, function(err) {
+		console.log('An error occurred while getting attrs zumbador:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'luz', auth: accessToken }).then(function(data) {
+		console.log('Device variable luz retrieved successfully:', data);
+		$('#luz').html("<b>Valor LDR:</b> " + data.body.result);
+	
+	  }, function(err) {
+		console.log('An error occurred while getting attrs luminosidad:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'temp-C', auth: accessToken }).then(function(data) {
+		console.log('Device variable temperatura retrieved successfully:', data);
+		$('#temperatura').html("<b>Temperatura :</b> " + data.body.result + "°C");
+	
+	  }, function(err) {
+		console.log('An error occurred while getting attrs temp:', err);
+	  });
+	  particle.getVariable({ deviceId:deviceId, name: 'Humedad', auth: accessToken }).then(function(data) {
+		console.log('Device variable Humedad retrieved successfully:', data);
+		$('#humedad').html("<b>Humedad:</b> " + data.body.result);
+	
+	  }, function(err) {
+		console.log('An error occurred while getting attrs Humedad:', err);
+	  });
+}
 
 // Called when a "led" event is sent by the Photon. We subscribe to this in deviceSelectChange.
 function eventHandler(event) {
@@ -192,6 +259,10 @@ function eventHandler(event) {
 	}
 	else if (event.name=='DHT22'){
 
+	}
+	else if (event.name=='spark/status'&&event.data=='offline'){
+		$('#appDiv2').hide();
+        $('#headDiv4').show();
 	}
 switch(event.data){
 	case 'Presencia Detectada':
@@ -227,12 +298,12 @@ switch(event.data){
 			$('#ventanaA').hide();
 			break;
 	case 'Door Open':
-			$('#PuertaA').show();
-			$('#PuertaC').hide();
+			$('#puertaA').show();
+			$('#puertaC').hide();
 			break;
     case 'Door Closed':
-			$('#PuertaC').show();
-			$('#PuertaA').hide();
+			$('#puertaC').show();
+			$('#puertaA').hide();
 			break;		
 			
 	default: break;
@@ -422,3 +493,32 @@ function accessTokenErrorHandler() {
 }
 
 
+/*particle.getVariable({ deviceId: deviceId, name: 'luz', auth: accessToken }).then(function(data) {
+		console.log('Device variable retrieved successfully:', data);
+		$('#queryingDiv').hide();
+		$('#appDiv').show();
+		//$('#appDiv2').show();
+		$('#headDiv3').hide();
+		hasSelectedDevice=true;
+
+		relay1On = (data.body.result != 0);
+		updateLedDisplay();
+		
+		// We were able to get the "led" variable, so we probably have the right firmware running.
+		// Subscribe to the led event stream so we will be notified when the status changes.
+		particle.getEventStream({ deviceId: deviceId, name: 'Alarm', auth: accessToken }).then(function(stream) {
+			stream.on('event', ledEventHandler);
+		});
+	}, function(err) {
+		// We try to get the "led" variable. If this causes an error, then the selected device probably
+		// isn't running our code. Show the error message in wrongApiDiv.
+		console.log('failure trying to get led variable ', err);
+		$('#queryingDiv').hide();
+		if (err.statusCode == 404) {
+			$('#wrongApiDiv').show();
+		}
+		else {
+			// Device did not respond is 408 but in this test code we just show that message for all errors
+			$('#deviceNotAvailableDiv').show();			
+		}
+	});*/
