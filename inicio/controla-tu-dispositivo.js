@@ -5,6 +5,7 @@ var particle = new Particle();
 // Global variables
 var accessToken;
 var deviceId;
+var gif1,gif2,gif3,gif4,gif5;
 var relay1On = false;
 var relay2On =false;
 var relay3On= false;
@@ -19,6 +20,16 @@ $(document).ready(function() {
 
 
 function initPage() {
+   gif1 = SuperGif({ gif: document.getElementById('relay1gif'), } );
+   gif1.load( );
+   gif2 = new SuperGif({ gif: document.getElementById('relay2gif'), progressbar_height:1 } );
+   gif2.load( );
+   gif3 = SuperGif({ gif: document.getElementById('relay3gif'), progressbar_height:1 } );
+   gif3.load( );
+   gif4 = SuperGif({ gif: document.getElementById('relay4gif'), progressbar_height:1 } );
+   gif4.load( );
+   gif5 = SuperGif({ gif: document.getElementById('buzzergif'), progressbar_height:1 } );
+   gif5.load( );
 	// Hook up handlers using jquery
 	$('#logoutButton').on('click', logoutButtonHandler);
 	//Relays
@@ -51,7 +62,7 @@ function initPage() {
 		$('#appDiv2').hide();
 		$('#appDiv3').hide();
 	}
-	else {
+	else { 
 		// We have an access token, so show the main page. Note that the access token
 		// may be expired, but we'll only find that out the first time we try to use it, when
 		// we update the device list.
@@ -62,7 +73,7 @@ function initPage() {
 		 $('#appDiv2').hide();
 		  $('#headDiv3').show();
 		}
-		else {$('#appDiv2').show();
+		else { $('#appDiv2').show();
 		 $('#headDiv3').hide();	
          checkDevConnected();
 		 particle.getVariable({ deviceId:deviceId, name: 'temp-C', auth: accessToken }).then(function(data) {
@@ -70,7 +81,7 @@ function initPage() {
 			  
 			 temperatura=data.body.result;
              checkVarStatus();
-
+            
  			 particle.getEventStream({ deviceId:deviceId, auth: accessToken }).then(function (stream) {
 			 stream.on('event', function(event) {
 			  //console.log("Event: ", event);
@@ -94,6 +105,9 @@ function initPage() {
 		
 		 }
 	}
+		
+	
+   
 }
 
 
@@ -339,7 +353,7 @@ function updateLedDisplay() {
 	}
 	else {
 		$('#relay2ondiv').hide();		
-		$('#relay2offdiv').show();		
+		$('#relay2offdiv').show();	
 	}
 	if (relay3On) {
 		$('#relay3ondiv').show();
@@ -347,7 +361,7 @@ function updateLedDisplay() {
 	}
 	else {
 		$('#relay3ondiv').hide();		
-		$('#relay3offdiv').show();		
+		$('#relay3offdiv').show();	
 	}
 	if (relay4On) {
 		$('#relay4ondiv').show();
@@ -355,7 +369,7 @@ function updateLedDisplay() {
 	}
 	else {
 		$('#relay4ondiv').hide();		
-		$('#relay4offdiv').show();		
+		$('#relay4offdiv').show();
 	}
 	if (zumbadorOn) {
 		$('#zumbadorondiv').show();
@@ -374,11 +388,38 @@ function relevador1Handler() {
 	// The setled Particle cloud function takes a string of the state to set, either "1" or "0"
 	var arg = (relay1On? "off1" : "on1");
 	
+
+
+  
+
 	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
 		function(data) {
 			console.log('relaySet success ', data);
-           	relay1On = !relay1On;
-	        updateLedDisplay();
+			   relay1On = !relay1On;
+			   if (relay1On) {
+				$('#relay1ondiv').show();
+				$('#relay1offdiv').hide();
+				if(!gif1.get_loading()){
+				gif1.play()
+				setTimeout(function(){
+					gif1.pause();
+					gif1.move_to(25);
+				 }, 2500); 
+				}
+			}
+			else {
+				$('#relay1ondiv').hide();		
+				$('#relay1offdiv').show();
+				if(!gif1.get_loading()){
+				gif1.play();
+				setTimeout(function(){
+					gif1.pause();
+					gif1.move_to(0);
+				 }, 2500); 
+				}
+						
+			}
+	       
 		}, function(err) {
 			console.log('relaySet error checking if dev connected', err);
 			checkDevConnected()
@@ -397,7 +438,28 @@ function relevador2Handler() {
 		function(data) {
 			console.log('relaySet success ', data);
 			relay2On = !relay2On;
-	        updateLedDisplay();
+	        if (relay2On) {
+				$('#relay2ondiv').show();
+				$('#relay2offdiv').hide();
+				if(!gif2.get_loading()){
+					gif2.play();
+					setTimeout(function(){
+						gif2.pause();
+						gif2.move_to(25);
+					 }, 2500); 
+					}	
+			}
+			else {
+				$('#relay2ondiv').hide();		
+				$('#relay2offdiv').show();	
+				if(!gif2.get_loading()){
+					gif2.play();
+					setTimeout(function(){
+						gif2.pause();
+						gif2.move_to(0);
+					 }, 2500); 
+					}	
+			}
 		}, function(err) {
 			console.log('relaySet error checking if dev connected', err);
 			checkDevConnected();
@@ -416,7 +478,28 @@ function relevador3Handler() {
 		function(data) {
 			console.log('relaySet success ', data);
 			relay3On = !relay3On;
-	        updateLedDisplay();
+			if (relay3On) {
+				$('#relay3ondiv').show();
+				$('#relay3offdiv').hide();
+				if(!gif3.get_loading()){
+					gif3.play();
+					setTimeout(function(){
+						gif3.pause();
+						gif3.move_to(25);
+					 }, 2500); 
+					}
+			}
+			else {
+				$('#relay3ondiv').hide();		
+				$('#relay3offdiv').show();	
+				if(!gif3.get_loading()){
+					gif3.play();
+					setTimeout(function(){
+						gif3.pause();
+						gif3.move_to(0);
+					 }, 2500); 
+					}	
+			}
 		}, function(err) {
 			console.log('relaySet error checking if dev connected', err);
 			checkDevConnected();//si esta conectado es probable que no tenga el codigo correcto el dispositivo photon
@@ -435,7 +518,28 @@ function relevador4Handler() {
 		function(data) {
 			console.log('relaySet success ', data);
 			relay4On = !relay4On;
-	updateLedDisplay();
+			if (relay4On) {
+				$('#relay4ondiv').show();
+				$('#relay4offdiv').hide();
+				if(!gif4.get_loading()){
+					gif4.play();
+					setTimeout(function(){
+						gif4.pause();
+						gif4.move_to(25);
+					 }, 2500); 
+					}
+			}
+			else {
+				$('#relay4ondiv').hide();		
+				$('#relay4offdiv').show();
+				if(!gif4.get_loading()){
+					gif4.play();
+					setTimeout(function(){
+						gif4.pause();
+						gif4.move_to(0);
+					 }, 2500); 
+					}		
+			}
 		}, function(err) {
 			console.log('relaySet error checking if dev connected', err);
 			checkDevConnected();
@@ -454,11 +558,34 @@ function zumbadorHandler() {
 		function(data) {
 			console.log('soundSet success ', data);
 			zumbadorOn = !zumbadorOn;
-			updateLedDisplay();
-		}, function(err) {
-			console.log('soundSet error checking if dev connected ', err);
-			checkDevConnected();
-			
+			if (zumbadorOn) {
+				$('#zumbadorondiv').show();
+				$('#zumbadoroffdiv').hide();
+				//gif5.move_relative(1);
+				if(!gif5.get_loading()){
+					gif5.play();
+					setTimeout(function(){
+						gif5.pause();
+						gif5.move_to(66);
+						
+					 }, 2800); 
+					}
+			}
+			else {
+				$('#zumbadorondiv').hide();		
+				$('#zumbadoroffdiv').show();
+				if(!gif5.get_loading()){
+					gif5.play();
+					setTimeout(function(){
+						gif5.pause();
+						gif5.move_to(0);
+					 }, 1000); 
+					}		
+			}
+	}, function(err) {
+		console.log('soundSet error checking if dev connected ', err);
+		checkDevConnected();
+		
 		});
 
 	

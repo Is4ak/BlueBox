@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en-US"><head><!-- Created by Artisteer v4.3.0.60858 -->
+<html dir="ltr" lang="en-US"><head><!-- Template Created by Artisteer v4.3.0.60858 -->
     <meta charset="utf-8">
     <title>Home
 </title>
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../style.css" media="screen">
     <!--[if lte IE 7]><link rel="stylesheet" href="../style.ie7.css" media="screen" /><![endif]-->
     <link rel="stylesheet" href="../style.responsive.css" media="all">
-
+    
    <!-- <script
     src="http://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -21,6 +21,8 @@
    <script type="text/javascript" src="../js.cookie.js"></script>
    <!-- <script type="text/javascript" src="../particle.min.js"></script>-->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particle-api-js@8/dist/particle.min.js"> </script>
+    <script type="text/javascript" src="../libgif.js"></script>
+	<script type="text/javascript" src="../rubbable.js"></script>
     <script type="text/javascript" src="controla-tu-dispositivo.js"></script>
    
 <meta name="description" content="Description">
@@ -114,7 +116,7 @@
     <div class="art-layout-cell" style="width: 33%" >
         <h3 style="text-align: center;">Relevador 1</h3>
         <p style="text-align: center;">
-            <img width="158" height="111" alt="" class="art-lightbox" src="../images/onlogo.gif"><br></p>
+            <img   id="relay1gif" src="../images/onlogo.gif" rel:auto_play="0" width="158" height="111" alt="" class="art-lightbox"> <br></p>
             <div id="relay1ondiv" class="hidden">
             <p style="text-align: center;"><span style="color: #ED1E07;">Relevador 1 Activado</span></p>
             <p style="text-align: center;">&nbsp;<a  title="Desactiva el relevador 1" class="art-button" id="Relevador1on">Desactivar</a>&nbsp;</p></div>
@@ -124,7 +126,7 @@
 
     </div><div class="art-layout-cell" style="width: 34%" >
         <h3 style="text-align: center;">Relevador 2<br></h3>
-        <p style="text-align: center;"><img width="158" height="111" alt="" class="art-lightbox" src="../images/onlogo.gif"><br></p>
+        <p style="text-align: center;"><img width="158" height="111" alt="" class="art-lightbox" id="relay2gif" rel:auto_play="0" src="../images/onlogo.gif"><br></p>
         <div id="relay2ondiv" class="hidden">
          <p style="text-align: center;"><span style="color: #ED1E07;">Relevador 2 Activado</span></p>
          <p style="text-align: center;">&nbsp;<a  title="Desactiva el relevador 2" class="art-button" id="Relevador2on">Desactivar</a>&nbsp;</p></div>
@@ -134,7 +136,7 @@
 
     </div><div class="art-layout-cell" style="width: 33%" >
         <h3 style="text-align: center;">Relevador 3<br></h3>
-        <p style="text-align: center;"><img width="158" height="111" alt="" class="art-lightbox" src="../images/onlogo-3.jpg"><br></p>
+        <p style="text-align: center;"><img width="158" height="111" alt="" class="art-lightbox" id="relay3gif" rel:auto_play="0" src="../images/onlogo.gif"><br></p>
         <div id="relay3ondiv" class="hidden">
          <p style="text-align: center;"><span style="color: #ED1E07;">Relevador 3 Activado</span></p>
          <p style="text-align: center;">&nbsp;<a  title="Desactiva el relevador 3" class="art-button" id="Relevador3on">Desactivar</a>&nbsp;</p></div>
@@ -149,7 +151,7 @@
     <div class="art-content-layout-row">
     <div class="art-layout-cell" style="width: 50%" >
         <h3 style="text-align:center;">Relevador 4</h3>
-        <p style="text-align: center;"><img width="198" height="139" alt="" class="art-lightbox" src="../images/onlogo-4.jpg"><br></p>
+        <p style="text-align: center;"><img width="198" height="139" alt="" class="art-lightbox" id="relay4gif" rel:auto_play="0" src="../images/onlogo.gif"><br></p>
         <div id="relay4ondiv" class="hidden">
                 <p style="text-align: center;"><span style="color: #ED1E07;">Relevador 4 Activado</span></p>
                 <p style="text-align: center;">&nbsp;<a  title="Desactiva el relevador 4" class="art-button" id="Relevador4on">Desactivar</a>&nbsp;</p></div>
@@ -159,7 +161,7 @@
 
     </div><div class="art-layout-cell" style="width: 50%" >
         <h3 style="text-align:center;">Zumbador</h3>
-        <p style="text-align: center;"><img width="198" height="139" alt="" class="art-lightbox" src="../images/buzzer.gif"></p>
+        <p style="text-align: center;"><img width="198" height="139" alt="" class="art-lightbox" id="buzzergif" rel:auto_play="0" src="../images/buzzer.gif"></p>
         <div id="zumbadorondiv" class="hidden">
         <p style="text-align: center;"><span style="color: rgb(237, 30, 7);">Zumbador Activado</span><br></p>
         <p style="text-align: center;"><a  class="art-button" title="Detiene sonido" id="Zumbadoron">Desactivar</a></p></div>
