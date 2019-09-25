@@ -20,15 +20,15 @@ $(document).ready(function() {
 
 
 function initPage() {
-   gif1 = SuperGif({ gif: document.getElementById('relay1gif'), } );
+   gif1 = SuperGif({ gif: document.getElementById('relay1gif'), progressbar_height:1, max_width:180  } );
    gif1.load( );
-   gif2 = new SuperGif({ gif: document.getElementById('relay2gif'), progressbar_height:1 } );
+   gif2 = new SuperGif({ gif: document.getElementById('relay2gif'), progressbar_height:1, max_width:180} );
    gif2.load( );
-   gif3 = SuperGif({ gif: document.getElementById('relay3gif'), progressbar_height:1 } );
+   gif3 = SuperGif({ gif: document.getElementById('relay3gif'), progressbar_height:1, max_width:180 } );
    gif3.load( );
-   gif4 = SuperGif({ gif: document.getElementById('relay4gif'), progressbar_height:1 } );
+   gif4 = SuperGif({ gif: document.getElementById('relay4gif'), progressbar_height:1, max_width:190 } );
    gif4.load( );
-   gif5 = SuperGif({ gif: document.getElementById('buzzergif'), progressbar_height:1 } );
+   gif5 = SuperGif({ gif: document.getElementById('buzzergif'), progressbar_height:1, max_width:150 } );
    gif5.load( );
 	// Hook up handlers using jquery
 	$('#logoutButton').on('click', logoutButtonHandler);
