@@ -5,6 +5,7 @@ var particle = new Particle();
 // Global variables
 var accessToken;
 var deviceId;
+var DHT22;
 var gif1,gif2,gif3,gif4,gif5;
 var relay1On = false;
 var relay2On =false;
@@ -258,7 +259,7 @@ function checkVarStatus(){
 	  });
 	  particle.getVariable({ deviceId:deviceId, name: 'Humedad', auth: accessToken }).then(function(data) {
 		console.log('Device variable Humedad retrieved successfully:', data);
-		$('#humedad').html("<b>Humedad:</b> " + data.body.result);
+		$('#humedad').html("<b>Humedad:</b> " + data.body.result + "%");
 	
 	  }, function(err) {
 		console.log('An error occurred while getting attrs Humedad:', err);
@@ -272,7 +273,10 @@ function eventHandler(event) {
 		$('#luz').html("<b>Valor LDR:</b> " + event.data);
 	}
 	else if (event.name=='DHT22'){
-
+		 DHT22 = JSON.parse(event.data);
+		$('#temperatura').html("<b>Temperatura :</b> " + DHT22.TempC + "°C <br> <br> Indice de Calor: " + DHT22.HIC + "°C");
+		$('#humedad').html("<b>Humedad:</b> " + DHT22.Hum + "% <br> <br> Punto de Rocio: " + DHT22.DPC + "°C");
+        console.log('dht22parsed: ',DHT22);
 	}
 	else if (event.name=='spark/status'&&event.data=='offline'){
 		$('#appDiv2').hide();
@@ -342,6 +346,8 @@ function updateLedDisplay() {
 	if (relay1On) {
 		$('#relay1ondiv').show();
 		$('#relay1offdiv').hide();
+	    	
+				
 	}
 	else {
 		$('#relay1ondiv').hide();		
