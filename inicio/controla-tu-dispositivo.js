@@ -31,6 +31,7 @@ function initPage() {
    gif4.load( );
    gif5 = SuperGif({ gif: document.getElementById('buzzergif'), progressbar_height:1, max_width:150 } );
    gif5.load( );
+ 
 	// Hook up handlers using jquery
 	$('#logoutButton').on('click', logoutButtonHandler);
 	//Relays
@@ -146,14 +147,26 @@ function checkVarStatus(){
 	  });
 	  particle.getVariable({ deviceId:deviceId, name: 'Relevador2', auth: accessToken }).then(function(data) {
 		console.log('Device variable relevador2 retrieved successfully:', data);
-        relay2On = (data.body.result == 0);
+		relay2On = (data.body.result == 0);
+		if (relay2On) {
+			if(gif2.get_loading()){
+			setTimeout(function(){
+				gif2.play();
+				setTimeout(function(){
+					gif2.pause();
+					gif2.move_to(25);
+				 }, 2500); 
+			},3000);
+			}	
+			}
+		
 		updateLedDisplay();
 	  }, function(err) {
 		console.log('An error occurred while getting attrs relevador 2:', err);
 	  });
 	  particle.getVariable({ deviceId:deviceId, name: 'Relevador3', auth: accessToken }).then(function(data) {
 		console.log('Device variable relevador3 retrieved successfully:', data);
-        relay3On = (data.body.result == 0);
+		relay3On = (data.body.result == 0);
 		updateLedDisplay();
 	  }, function(err) {
 		console.log('An error occurred while getting attrs relevador 3:', err);
@@ -401,7 +414,17 @@ function relevador1Handler() {
 	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
 		function(data) {
 			console.log('relaySet success ', data);
-			   relay1On = !relay1On;
+			switch(data.body.return_value){
+				case 11:
+			    relay1On = true;
+				break;
+				case 10:
+						relay1On =false;
+						break;
+				default: break;
+			}
+			
+
 			   if (relay1On) {
 				$('#relay1ondiv').show();
 				$('#relay1offdiv').hide();
@@ -443,7 +466,16 @@ function relevador2Handler() {
 	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
 		function(data) {
 			console.log('relaySet success ', data);
-			relay2On = !relay2On;
+			switch(data.body.return_value){
+				case 21:
+			    relay2On = true;
+				break;
+				case 20:
+						relay2On =false;
+						break;
+				default: break;
+			}
+			
 	        if (relay2On) {
 				$('#relay2ondiv').show();
 				$('#relay2offdiv').hide();
@@ -483,7 +515,15 @@ function relevador3Handler() {
 	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
 		function(data) {
 			console.log('relaySet success ', data);
-			relay3On = !relay3On;
+			switch(data.body.return_value){
+				case 31:
+			    relay3On = true;
+				break;
+				case 30:
+						relay3On =false;
+						break;
+				default: break;
+			}
 			if (relay3On) {
 				$('#relay3ondiv').show();
 				$('#relay3offdiv').hide();
@@ -523,7 +563,15 @@ function relevador4Handler() {
 	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
 		function(data) {
 			console.log('relaySet success ', data);
-			relay4On = !relay4On;
+			switch(data.body.return_value){
+				case 41:
+			    relay4On = true;
+				break;
+				case 40:
+						relay4On =false;
+						break;
+				default: break;
+			}
 			if (relay4On) {
 				$('#relay4ondiv').show();
 				$('#relay4offdiv').hide();
