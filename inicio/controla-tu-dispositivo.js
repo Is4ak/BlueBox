@@ -141,7 +141,18 @@ function checkVarStatus(){
 	particle.getVariable({ deviceId:deviceId, name: 'Relevador1', auth: accessToken }).then(function(data) {
 		console.log('Device variable relevador1 retrieved successfully:', data);
         relay1On = (data.body.result == 0);
-		updateLedDisplay();
+		if (relay1On) {
+			if(gif1.get_loading()){
+			setTimeout(function(){
+				gif1.play();
+				updateLedDisplay();
+				setTimeout(function(){
+					gif1.pause();
+					gif1.move_to(25);
+				 }, 2500); 
+			},7500);
+			}	
+			}
 	  }, function(err) {
 		console.log('An error occurred while getting attrs relevador 1:', err);
 	  });
@@ -152,29 +163,51 @@ function checkVarStatus(){
 			if(gif2.get_loading()){
 			setTimeout(function(){
 				gif2.play();
+				updateLedDisplay();
 				setTimeout(function(){
 					gif2.pause();
 					gif2.move_to(25);
 				 }, 2500); 
-			},3000);
+			},7500);
 			}	
 			}
 		
-		updateLedDisplay();
 	  }, function(err) {
 		console.log('An error occurred while getting attrs relevador 2:', err);
 	  });
 	  particle.getVariable({ deviceId:deviceId, name: 'Relevador3', auth: accessToken }).then(function(data) {
 		console.log('Device variable relevador3 retrieved successfully:', data);
 		relay3On = (data.body.result == 0);
-		updateLedDisplay();
+		if (relay3On) {
+			if(gif3.get_loading()){
+			setTimeout(function(){
+				gif3.play();
+				updateLedDisplay();
+				setTimeout(function(){
+					gif3.pause();
+					gif3.move_to(25);
+				 }, 2500); 
+			},7500);
+			}	
+			}
 	  }, function(err) {
 		console.log('An error occurred while getting attrs relevador 3:', err);
 	  });
 	  particle.getVariable({ deviceId:deviceId, name: 'Relevador4', auth: accessToken }).then(function(data) {
 		console.log('Device variable relevador4 retrieved successfully:', data);
         relay4On = (data.body.result == 0);
-		updateLedDisplay();
+		if (relay4On) {
+			if(gif4.get_loading()){
+			setTimeout(function(){
+				gif4.play();
+				updateLedDisplay();
+				setTimeout(function(){
+					gif4.pause();
+					gif4.move_to(25);
+				 }, 2500); 
+			},7500);
+			}	
+			}
 	  }, function(err) {
 		console.log('An error occurred while getting attrs relevador 4:', err);
 	  });
@@ -251,7 +284,20 @@ function checkVarStatus(){
 	  particle.getVariable({ deviceId:deviceId, name: 'Zumbador', auth: accessToken }).then(function(data) {
 		console.log('Device variable zumbador retrieved successfully:', data);
 		zumbadorOn = (data.body.result == 1);
-		updateLedDisplay();
+		if (zumbadorOn) {
+			
+			if(gif5.get_loading()){
+				setTimeout(function(){
+				gif5.play();
+				updateLedDisplay();
+				setTimeout(function(){
+					gif5.pause();
+					gif5.move_to(66);
+					
+				 }, 2800); 
+				},7500);
+				}
+		}
 
 	  }, function(err) {
 		console.log('An error occurred while getting attrs zumbador:', err);
