@@ -35,15 +35,20 @@ function initPage() {
 	// Hook up handlers using jquery
 	$('#logoutButton').on('click', logoutButtonHandler);
 	//Relays
+	$('#rel1').on('click', relevador1Handler);
 	$('#Relevador1on').on('click', relevador1Handler);
 	$('#Relevador1off').on('click', relevador1Handler);
+	$('#rel2').on('click', relevador2Handler);
 	$('#Relevador2on').on('click', relevador2Handler);
 	$('#Relevador2off').on('click', relevador2Handler);
+	$('#rel3').on('click', relevador3Handler);
 	$('#Relevador3on').on('click', relevador3Handler);
 	$('#Relevador3off').on('click', relevador3Handler);
+	$('#rel4').on('click', relevador4Handler);
 	$('#Relevador4on').on('click', relevador4Handler);
 	$('#Relevador4off').on('click', relevador4Handler);
 	// Buzzer
+	$('#zum').on('click', zumbadorHandler);
 	$('#Zumbadoron').on('click', zumbadorHandler);
 	$('#Zumbadoroff').on('click', zumbadorHandler);
 	

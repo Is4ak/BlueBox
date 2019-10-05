@@ -14,7 +14,7 @@ function initPage() {
 	$('#Acceder').on('click', loginButtonHandler);
 	$('#logoutButton').on('click', logoutButtonHandler);
 	$('#deviceSelect').on('change', deviceSelectChange);
-	$('#toggleButton').on('click', toggleButtonHandler);
+	
 	
 	
 	// Read the access token from a browser cookie, if we can. This uses js-cookie.js, which is much
@@ -43,6 +43,7 @@ function initPage() {
 		$('#headDiv').hide();
 		$('#appDiv3').show();
 		updateDeviceList();	
+		//document.getElementById('controlarDisp').click();
 	}
 }
 
@@ -95,6 +96,7 @@ function loginButtonHandler(event) {
 			$('#appDiv3').show();
 			$('#headDiv').hide();
 			updateDeviceList();
+			
 		},
 		function(err) {
 			// Failure to log in. Probably an invalid password. Could possibly be another
@@ -153,7 +155,9 @@ function updateDeviceList() {
 				}
 			}
 			// If we selected a device in lastDeviceId, load the initial state now
-			deviceSelectChange();
+			//deviceSelectChange();
+			$('#appDiv').show();
+			
 		},	
 		function(err) {
 			// This can happen when a saved access token has expired. If so, remove the saved
@@ -194,9 +198,7 @@ function deviceSelectChange() {
 		//$('#appDiv2').show();
 		$('#headDiv3').hide();
 		hasSelectedDevice=true;
-
-		ledOn = (data.body.result != 0);
-		updateLedDisplay();
+		
 		
 		// We were able to get the "led" variable, so we probably have the right firmware running.
 		// Subscribe to the led event stream so we will be notified when the status changes.
@@ -216,50 +218,10 @@ function deviceSelectChange() {
 			$('#deviceNotAvailableDiv').show();			
 		}
 	});
+	document.getElementById('controlarDisp').click();
 }
 
-// Called when a "led" event is sent by the Photon. We subscribe to this in deviceSelectChange.
-function ledEventHandler(data) {
-	console.log('ledEventHandler ', data);
 
-	if (data.coreid != deviceId) {
-		// This happens if you switch devices, because I'm not actually sure how to stop getting a device stream
-		return;
-	}
-	ledOn = (data.data == '1');
-	updateLedDisplay();
-}
-
-// Shows the appropriate string based on the value on ledOn (true/false)
-function updateLedDisplay() {
-	if (ledOn) {
-		$('#ledOnDiv').show();
-		$('#ledOffDiv').hide();
-	}
-	else {
-		$('#ledOnDiv').hide();		
-		$('#ledOffDiv').show();		
-	}
-}
-
-// This is called when the Toggle LED button is clicked. 
-function toggleButtonHandler() {
-	
-	ledOn = !ledOn;
-	updateLedDisplay();
-	
-	// The setled Particle cloud function takes a string of the state to set, either "1" or "0"
-	var arg = (ledOn ? "on1" : "off1");
-	
-	particle.callFunction({ deviceId:deviceId, name: 'Relays', argument: arg, auth: accessToken }).then(
-		function(data) {
-			console.log('setled success ', data);
-		}, function(err) {
-			console.log('setled error ', err);
-		});
-
-	
-}
 
 // This handles the logout button. Show the login screen and also remove our cookies.
 function logoutButtonHandler() {
