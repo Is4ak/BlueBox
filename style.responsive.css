@@ -140,7 +140,7 @@
 
 .responsive .art-header .art-slidenavigator 
 {
-   position: absolute;
+   position: static;
 }
 
 .default-responsive .art-header .art-positioncontrol 
